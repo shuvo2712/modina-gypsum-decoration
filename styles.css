@@ -33,6 +33,7 @@ html {
 body {
   font-family: var(--font-body);
   background: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.17 0 0 0 0 0.13 0 0 0 0 0.08 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.7'/%3E%3C/svg%3E");
   color: var(--fg);
   line-height: 1.6;
   overflow-x: hidden;
@@ -55,9 +56,9 @@ a {
 ======================== */
 h1, h2, h3, h4 {
   font-family: var(--font-head);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
 /* ========================
@@ -159,9 +160,10 @@ h1, h2, h3, h4 {
 
 .logo {
   font-family: var(--font-head);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: var(--fg);
   flex-shrink: 0;
 }
@@ -252,8 +254,9 @@ h1, h2, h3, h4 {
 
 .hero-headline {
   font-size: clamp(2.4rem, 4vw, 3.6rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  font-weight: 500;
 }
 
 .hero-sub {
@@ -276,20 +279,27 @@ h1, h2, h3, h4 {
 }
 
 .hero-image-frame {
-  border-radius: 20px;
+  border-radius: var(--radius);
   overflow: hidden;
   aspect-ratio: 4/5;
   box-shadow: var(--shadow-hover);
   background-size: cover;
   background-position: center;
+  border: 1px solid var(--accent);
+  padding: 8px;
+  background: var(--white);
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
 }
 
 .hero-image-frame img {
-  transition: transform 0.6s ease, opacity 1.2s ease-in-out;
-}
-
-.hero-image-frame:hover img {
-  transform: scale(1.03);
+  transition: opacity 1.2s ease-in-out;
+  border-radius: calc(var(--radius) - 8px);
+  animation: kenburns 12s ease-in-out infinite;
 }
 
 .hero-badge-float {
@@ -332,8 +342,8 @@ h1, h2, h3, h4 {
 
 .marquee-strip {
   margin-top: 80px;
-  border-top: 1px solid var(--gray);
-  border-bottom: 1px solid var(--gray);
+  border-top: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
   padding: 18px 0;
   overflow: hidden;
   white-space: nowrap;
@@ -414,13 +424,15 @@ h1, h2, h3, h4 {
   overflow: hidden;
   background: var(--white);
   box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--gray);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   cursor: pointer;
 }
 
 .category-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px rgba(200, 169, 110, 0.25);
 }
 
 .category-img-wrap {
@@ -439,17 +451,21 @@ h1, h2, h3, h4 {
 
 .category-overlay {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
+  inset: 16px;
+  background: rgba(44, 34, 21, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity var(--transition);
+  border: 1.5px solid var(--accent);
+  border-radius: calc(var(--radius) - 8px);
+  transition: opacity var(--transition), transform var(--transition);
+  transform: scale(0.95);
 }
 
 .category-card:hover .category-overlay {
   opacity: 1;
+  transform: scale(1);
 }
 
 .category-info {
@@ -480,15 +496,18 @@ h1, h2, h3, h4 {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
+  border: 1px solid var(--gray);
   cursor: pointer;
   transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.25s ease;
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
 }
 
 .product-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px rgba(200, 169, 110, 0.25);
 }
 
 .product-img-wrap {
@@ -686,7 +705,7 @@ h1, h2, h3, h4 {
 ======================== */
 .footer {
   background: var(--white);
-  border-top: 1px solid var(--gray);
+  border-top: 1.5px solid var(--accent);
   padding: 48px 24px 32px;
 }
 
